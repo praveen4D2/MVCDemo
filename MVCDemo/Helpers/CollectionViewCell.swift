@@ -9,5 +9,13 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
+    var item: Any? {
+        didSet {
+            self.configure(self.item)
+        }
+    }
     
+    weak var delegate: NSObjectProtocol? = nil
+    
+    func configure(_ item: Any?) { }
 }

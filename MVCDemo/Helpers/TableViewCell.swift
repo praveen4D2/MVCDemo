@@ -10,15 +10,14 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    var item: Any? {
+        didSet {
+            self.configure(self.item)
+        }
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    
+    weak var delegate: NSObjectProtocol? = nil
+    
+    func configure(_ item: Any?) { }
 
 }

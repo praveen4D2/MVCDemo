@@ -35,22 +35,27 @@ class ViewController: UIViewController {
     }
     
     func getCricketTeams(){
-        self.showLoader()
-        APIService.shared.GET(endpoint: APIService.Endpoint.getPlayers)     {
-            (result: Result<CricketTeams, APIService.APIError>) in
-            self.hideLoader()
-            switch result {
-            case let .success(response):
-                let mirror = Mirror(reflecting: response)
-                for child in mirror.children  {
-                    let country = TeamCellModel(countryName: child.label ?? "", playersList: child.value as! [Player])
-                    self.countries.append(country)
+        
+        if CheckInternet.Connection() {
+            self.showLoader()
+            APIService.shared.GET(endpoint: APIService.Endpoint.getPlayers)     {
+                (result: Result<CricketTeams, APIService.APIError>) in
+                self.hideLoader()
+                switch result {
+                case let .success(response):
+                    let mirror = Mirror(reflecting: response)
+                    for child in mirror.children  {
+                        let country = TeamCellModel(countryName: child.label ?? "", playersList: child.value as! [Player])
+                        self.countries.append(country)
+                    }
+                    self.tableView.reloadData()
+                case let .failure(error):
+                    print(error)
+                    break
                 }
-                self.tableView.reloadData()
-            case let .failure(error):
-                print(error)
-                break
             }
+        } else {
+            print("connection is not there")
         }
         
     }

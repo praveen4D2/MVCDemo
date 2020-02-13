@@ -8,17 +8,23 @@
 
 import UIKit
 
-class TeamsTableViewCell: UITableViewCell {
+class TeamsTableViewCell: TableViewCell {
 
+    /// XIB outlets
+    
+    @IBOutlet weak var lblTeamName: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    }
+    
+    override func configure(_ item: Any?) {
+        guard let model = item as? TeamCellModel else { return }
+        self.lblTeamName.text = (model.countryName.capitalizingFirstLetter())
     }
     
 }
